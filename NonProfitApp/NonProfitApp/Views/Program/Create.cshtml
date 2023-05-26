@@ -1,0 +1,18 @@
+﻿@model OrgProgram
+
+<form asp-action="Create" asp-controller="Program" method="post" class="row g-3">
+    <div class="col-md-6">
+        <label asp-for="Name" class="form-label">Program Name</label>
+        <input asp-for="Name" class="form-control">
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="col-12">
+        <button type="submit" class="btn btn-primary">Add Program</button>
+    </div>
+</form>
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

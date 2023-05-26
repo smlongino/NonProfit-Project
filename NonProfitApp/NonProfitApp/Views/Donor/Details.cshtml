@@ -1,0 +1,14 @@
+﻿@model Donor
+<a asp-controller="Donor" asp-action="Index" class="btn btn-primary">Back to Donors</a>
+<div class="card" style="width: 18rem;">
+    <div class="card-body">
+        <h5 class="card-title">@Model.FirstName @Model.LastName</h5>
+        <p class="card-text">Company: @Model.Company</p>
+        <p class="card-text">Phone: @Model.Phone Email: @Model.Email</p>
+        <p class="card-text">Email: @Model.Email</p>
+        <p class="card-text">Address: @Model.StreetAddress</p>
+        <p class="card-text">@Model.City, @Model.State @Model.Zip</p>
+        <a asp-controller="Donor" asp-action="Edit" asp-route-id="@Model.DonorId" class="btn btn-primary">Edit</a>
+        <a a asp-controller="Donor" asp-action="Delete" asp-route-id="@Model.DonorId" class="btn btn-primary">Delete</a>
+    </div>
+</div>

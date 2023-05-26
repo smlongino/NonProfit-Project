@@ -1,0 +1,23 @@
+﻿@model IEnumerable<Channel>
+<div>
+    <a asp-controller="Channel" asp-action="Create" class="btn btn-primary">Add Channel</a>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Channel</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (Channel c in Model)
+    {
+            <tr>
+                <td>@c.ChannelType</td>
+                <td><a asp-controller="Channel" asp-action="Delete" asp-route-id="@c.ChannelId" >Delete</a></td>
+            </tr>
+    }
+    </tbody>
+</table>
+
+

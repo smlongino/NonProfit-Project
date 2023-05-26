@@ -1,0 +1,25 @@
+﻿@model IEnumerable<Fundraiser>
+<div>
+    <a asp-controller="Fundraiser" asp-action="Create" class="btn btn-primary">Add Fundraiser</a>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Fundraiser</th>
+            <th scope="col">Start Date</th>
+            <th scope="col">End Date</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Fundraiser f in Model)
+        {
+            <tr>
+                <td>@f.FundraiserName</td>
+                <td>@f.StartDate</td>
+                <td>@f.EndDate</td>
+                <td><a asp-controller="Fundraiser" asp-action="Delete" asp-route-id="@f.FundraiserId">Delete</a></td>
+            </tr>
+        }
+    </tbody>
+</table>

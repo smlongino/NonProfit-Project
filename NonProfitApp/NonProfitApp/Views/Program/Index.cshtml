@@ -1,0 +1,21 @@
+﻿@model IEnumerable<OrgProgram>
+<div>
+    <a asp-controller="Program" asp-action="Create" class="btn btn-primary">Add Program</a>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Program</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (OrgProgram p in Model)
+        {
+            <tr>
+                <td>@p.Name</td>
+                <td><a asp-controller="Program" asp-action="Delete" asp-route-id="@p.ProgramId">Delete</a></td>
+            </tr>
+        }
+    </tbody>
+</table>

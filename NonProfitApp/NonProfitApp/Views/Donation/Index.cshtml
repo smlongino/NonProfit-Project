@@ -1,0 +1,23 @@
+﻿@model IEnumerable<Donation>
+<div>
+    <a asp-controller="Donation" asp-action="Create" class="btn btn-primary">Add Donation</a>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Donation Date</th>
+            <th scope="col">Amount</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Donation d in Model)
+        {
+            <tr>
+                <td>@d.DonationDate</td>
+                <td>@d.DonationAmount</td>
+                <td><a asp-controller="Donation" asp-action="Details" asp-route-id="@d.DonationId">Details</a></td>
+            </tr>
+        }
+    </tbody>
+</table>

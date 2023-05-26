@@ -1,0 +1,18 @@
+﻿@model Channel
+
+<form asp-action="Create" asp-controller="Channel" method="post" class="row g-3">
+    <div class="col-md-6">
+        <label asp-for="ChannelType" class="form-label">Channel Name</label>
+        <input asp-for="ChannelType" class="form-control">
+        <span asp-validation-for="ChannelType" class="text-danger"></span>
+    </div>
+
+    <div class="col-12">
+        <button type="submit" class="btn btn-primary">Add Channel</button>
+    </div>
+</form>
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
