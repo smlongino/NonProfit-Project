@@ -30,10 +30,10 @@ namespace NonProfitApp.Controllers
         [HttpPost]
         public IActionResult Create(Fundraiser fundraiser)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return View(funsraiser);
-            //}
+            if (!ModelState.IsValid)
+            {
+                return View(fundraiser);
+            }
             _context.Fundraisers.Add(fundraiser);
             _context.SaveChanges();
             return RedirectToAction("Index");

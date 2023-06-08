@@ -8,16 +8,19 @@ namespace NonProfitApp.Models
         public int FundraiserId { get; set; }
         [Required]
         [StringLength(50)]
+        [Display(Name = "Fundraiser Name")]
         public string FundraiserName { get; set; }
         [Required]
+        [Display(Name = "Start Date")]
         public DateTime StartDate { get; set; }
         [Required]
+        [Display(Name = "End Date")]
         public DateTime EndDate { get; set; }
 
         //nav props
         //a fundraiser can be related to more than 1 Donation and FundraiserChannels
-        public ICollection<Donation> Donations { get; set; }
-        public ICollection<FundraiserChannel> FundraiserChannels { get; set; }
-        public ICollection<FundraiserProgram> FundraiserPrograms { get; set; }
+        public IEnumerable<Donation> Donations { get; set; }
+        public IEnumerable<FundraiserChannel> FundraiserChannels { get; set; }
+        public IEnumerable<FundraiserProgram> FundraiserPrograms { get; set; }
     }
 }

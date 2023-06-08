@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using NonProfitApp.Models;
 using System.ComponentModel.DataAnnotations;
-using System.Runtime.CompilerServices;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace NonProfitApp.Models
+namespace NonProfitApp.ViewModels
 {
-    public class Donation
+    public class DonationCreateVM
     {
         [Key]
         public int DonationId { get; set; }
@@ -17,26 +18,22 @@ namespace NonProfitApp.Models
         [Display(Name = "Donation Date")]
         public DateTime DonationDate { get; set; }
         [ForeignKey("Donor")]
-        [Display(Name = "Donor Id")]
+        [Display(Name = "Donor Name")]
         public int DonorId { get; set; }
         [ForeignKey("Fundraiser")]
-        [Display(Name = "Fundraiser Id")]
+        [Display(Name = "Fundraiser Name")]
         public int? FundraiserId { get; set; }
         [ForeignKey("Channel")]
-        [Display(Name = "Channel Id")]
+        [Display(Name = "Channel Type")]
         public int ChannelId { get; set; }
         [ForeignKey("OrgProgram")]
-        [Display(Name = "Program Id")]
+        [Display(Name = "Program")]
         public int ProgramId { get; set; }
 
-        //nav props
-        //A donation is associated with one donor
         public Donor Donor { get; set; }
-        //a donation is associated with one Fundraiser
-        public Fundraiser Fundraiser { get; set; }
-        //a donation is associated with one Channel
-        public Channel Channel { get; set; }
-        //A donation is associated with one program 
-        public OrgProgram OrgProgram { get; set; }
+        public IEnumerable<SelectListItem> ChannelList { get; set; }
+        public IEnumerable<SelectListItem> ProgramList { get; set; }
+        public IEnumerable<SelectListItem> FundraiserList { get; set; }
+
     }
 }

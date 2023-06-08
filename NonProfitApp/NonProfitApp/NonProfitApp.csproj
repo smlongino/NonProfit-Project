@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>aspnet-NonProfitApp-a1b64e97-468b-4497-a7b2-1e4158f1af41</UserSecretsId>
   </PropertyGroup>

@@ -2,12 +2,7 @@
 <a asp-controller="Donation" asp-action="Index" class="btn btn-primary">Back to Donations</a>
 <div class="card" style="width: 18rem;">
     <div class="card-body">
-        <h5 class="card-title">@Model.DonationDate @Model.DonationAmount</h5>
-@*        <p class="card-text">Company: @Model.Company</p>
-        <p class="card-text">Phone: @Model.Phone Email: @Model.Email</p>
-        <p class="card-text">Email: @Model.Email</p>
-        <p class="card-text">Address: @Model.StreetAddress</p>
-        <p class="card-text">@Model.City, @Model.State @Model.Zip</p>*@
+        <h5 class="card-title">Donation Date: @Model.DonationDate Donation Amount: @Model.DonationAmount Channel: @Model.Channel.ChannelType </h5>
         <a asp-controller="Donation" asp-action="Edit" asp-route-id="@Model.DonationId" class="btn btn-primary">Edit</a>
         <a a asp-controller="Donation" asp-action="Delete" asp-route-id="@Model.DonationId" class="btn btn-primary">Delete</a>
     </div>

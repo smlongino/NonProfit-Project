@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Xml.Linq;
 
-namespace NonProfitApp.Models
+namespace NonProfitApp.ViewModels
 {
-    public class Donor
+    public class DonorCreateVM
     {
         [Key]
         public int DonorId { get; set; }
@@ -34,10 +35,9 @@ namespace NonProfitApp.Models
         [Display(Name = "Zip Code")]
         public string? Zip { get; set; }
         public bool Active { get; set; }
-        [StringLength (100)]
+        [StringLength(100)]
         public string ImageLocation { get; set; }
-        //navigation properties
-        //1 donor has many donations
-        public IEnumerable<Donation> Donations { get; set; }
+        [Display(Name ="Upload Donor Picture")]
+        public IFormFile DonorImage { get; set; }
     }
 }

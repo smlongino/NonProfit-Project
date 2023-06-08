@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using NonProfitApp.Data;
 using NonProfitApp.Models;
+using NonProfitApp.ViewModels;
+using System.Collections.Generic;
 
 namespace NonProfitApp.Controllers
 {
@@ -13,9 +15,15 @@ namespace NonProfitApp.Controllers
             _context = context;
         }
         // GET: DonorController
-        public IActionResult Index()
+        public IActionResult Index(string search)
         {
             IEnumerable<Donor> donors = _context.Donors;
+
+            if (!String.IsNullOrEmpty(search))
+            {
+                IEnumerable<Donor> filteredDonors = donors.Where(d => d.LastName.ToLower().Contains(search.ToLower()) || d.FirstName.ToLower().Contains(search.ToLower()));
+                return View(filteredDonors);
+            }
             donors = donors.OrderBy(donor => donor.LastName);
             return View(donors.Where(x => x.Active));
         }
@@ -39,17 +47,35 @@ namespace NonProfitApp.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            DonorCreateVM donorVM = new DonorCreateVM
+            {
+
+            };
+            return View(donorVM);
         }
 
         // POST: DonorController/Create
         [HttpPost]
-        public IActionResult Create(Donor donor)
+        public IActionResult Create(DonorCreateVM donorVM)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return View(donor);
-            //}
+            if (!ModelState.IsValid)
+            {
+                return View(donorVM);
+            }
+            Donor donor = new Donor
+            {
+                Company = donorVM.Company,
+                FirstName = donorVM.FirstName,
+                LastName = donorVM.LastName,
+                Phone = donorVM.Phone,
+                Email = donorVM.Email,
+                StreetAddress = donorVM.StreetAddress,
+                City = donorVM.City,
+                State = donorVM.State,
+                Zip = donorVM.Zip,
+                Active = donorVM.Active,
+                ImageLocation = donorVM.ImageLocation
+            };
             _context.Donors.Add(donor);
             _context.SaveChanges();
             return RedirectToAction("Index");
