@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NonProfitApp.Data;
 using NonProfitApp.Models;
+using System.Threading.Channels;
 
 namespace NonProfitApp.Controllers
 {
@@ -16,7 +17,7 @@ namespace NonProfitApp.Controllers
             {
                 IEnumerable<OrgProgram> programs = _context.OrgPrograms;
                 programs = programs.OrderBy(programs => programs.Name);
-                return View(programs);
+                return View(programs.Where(x => x.Active));
             }
 
             [HttpGet]
@@ -28,11 +29,15 @@ namespace NonProfitApp.Controllers
             [HttpPost]
             public IActionResult Create(OrgProgram program)
             {
-                //if (!ModelState.IsValid)
-                //{
-                //    return View(channel);
-                //}
-                _context.OrgPrograms.Add(program);
+            if (!ModelState.IsValid)
+            {
+                return View(program);
+            }
+            if (_context.OrgPrograms.Where(p => p.Active).Any(p => p.Name == program.Name))
+            {
+                return View(program);
+            }
+            _context.OrgPrograms.Add(program);
                 _context.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -56,13 +61,20 @@ namespace NonProfitApp.Controllers
             [ValidateAntiForgeryToken]
             public IActionResult Delete(OrgProgram program)
             {
-                //if(!ModelState.IsValid)
-                //{
-                //    return View(channel);
-                //}
-                _context.OrgPrograms.Remove(program);
-                _context.SaveChanges();
-                return RedirectToAction("Index");
+            if(program.ProgramId == 0)
+            {
+                return NotFound();
+            }
+            OrgProgram p = _context.OrgPrograms.SingleOrDefault(p => p.ProgramId == program.ProgramId);
+            if(p == null)
+            {
+                return NotFound();
+            }
+            
+            p.Active = false;
+            _context.OrgPrograms.Update(p);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
             }
         }
     }

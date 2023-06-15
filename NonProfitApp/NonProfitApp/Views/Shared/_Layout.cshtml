@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/NonProfitApp.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 </head>
 <body>
     <header>
@@ -29,6 +30,15 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Donation" asp-action="Index">Donations</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Fundraiser" asp-action="Index">Fundraisers</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Channel" asp-action="Index">Channels</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Program" asp-action="Index">Programs</a>
+                        </li>
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
@@ -40,6 +50,7 @@
             @RenderBody()
         </main>
     </div>
+
 
     <footer class="border-top footer text-muted">
         <div class="container">

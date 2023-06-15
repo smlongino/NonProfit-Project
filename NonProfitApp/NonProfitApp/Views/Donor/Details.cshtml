@@ -8,6 +8,8 @@
         <p class="card-text">Email: @Model.Email</p>
         <p class="card-text">Address: @Model.StreetAddress</p>
         <p class="card-text">@Model.City, @Model.State @Model.Zip</p>
+        <a asp-controller="Donation" asp-action="DonationsByDonor" asp-route-donorId="@Model.DonorId" class="btn btn-primary">View Donations</a>
+        <a asp-controller="Donation" asp-action="CreatefromDonor" asp-route-donorId="@Model.DonorId" class="btn btn-primary">Add Donation</a>
         <a asp-controller="Donor" asp-action="Edit" asp-route-id="@Model.DonorId" class="btn btn-primary">Edit</a>
         <a a asp-controller="Donor" asp-action="Delete" asp-route-id="@Model.DonorId" class="btn btn-primary">Delete</a>
     </div>

@@ -74,71 +74,6 @@ namespace NonProfitApp.Data.Migrations
                     b.ToTable("AspNetRoleClaims", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers", (string)null);
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.Property<int>("Id")
@@ -224,6 +159,77 @@ namespace NonProfitApp.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("NonProfitApp.Models.AppUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
+                });
+
             modelBuilder.Entity("NonProfitApp.Models.Channel", b =>
                 {
                     b.Property<int>("ChannelId")
@@ -232,6 +238,9 @@ namespace NonProfitApp.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ChannelId"), 1L, 1);
 
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
                     b.Property<string>("ChannelType")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -239,7 +248,7 @@ namespace NonProfitApp.Data.Migrations
 
                     b.HasKey("ChannelId");
 
-                    b.ToTable("Channels");
+                    b.ToTable("Channels", (string)null);
                 });
 
             modelBuilder.Entity("NonProfitApp.Models.Donation", b =>
@@ -250,7 +259,7 @@ namespace NonProfitApp.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DonationId"), 1L, 1);
 
-                    b.Property<int>("ChannelId")
+                    b.Property<int?>("ChannelId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("DonationAmount")
@@ -263,10 +272,12 @@ namespace NonProfitApp.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<int?>("FundraiserId")
-                        .IsRequired()
                         .HasColumnType("int");
 
-                    b.Property<int>("ProgramId")
+                    b.Property<int?>("OrgProgramProgramId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ProgramId")
                         .HasColumnType("int");
 
                     b.HasKey("DonationId");
@@ -277,9 +288,9 @@ namespace NonProfitApp.Data.Migrations
 
                     b.HasIndex("FundraiserId");
 
-                    b.HasIndex("ProgramId");
+                    b.HasIndex("OrgProgramProgramId");
 
-                    b.ToTable("Donations");
+                    b.ToTable("Donations", (string)null);
                 });
 
             modelBuilder.Entity("NonProfitApp.Models.Donor", b =>
@@ -310,18 +321,14 @@ namespace NonProfitApp.Data.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.Property<string>("ImageLocation")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("Phone")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(14)
+                        .HasColumnType("nvarchar(14)");
 
                     b.Property<string>("State")
                         .HasMaxLength(30)
@@ -337,7 +344,7 @@ namespace NonProfitApp.Data.Migrations
 
                     b.HasKey("DonorId");
 
-                    b.ToTable("Donors");
+                    b.ToTable("Donors", (string)null);
                 });
 
             modelBuilder.Entity("NonProfitApp.Models.Fundraiser", b =>
@@ -347,6 +354,9 @@ namespace NonProfitApp.Data.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FundraiserId"), 1L, 1);
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
@@ -361,7 +371,7 @@ namespace NonProfitApp.Data.Migrations
 
                     b.HasKey("FundraiserId");
 
-                    b.ToTable("Fundraisers");
+                    b.ToTable("Fundraisers", (string)null);
                 });
 
             modelBuilder.Entity("NonProfitApp.Models.FundraiserChannel", b =>
@@ -384,7 +394,7 @@ namespace NonProfitApp.Data.Migrations
 
                     b.HasIndex("FundraiserId");
 
-                    b.ToTable("FundraiserChannels");
+                    b.ToTable("FundraiserChannels", (string)null);
                 });
 
             modelBuilder.Entity("NonProfitApp.Models.FundraiserProgram", b =>
@@ -398,7 +408,7 @@ namespace NonProfitApp.Data.Migrations
                     b.Property<int>("FundraiserId")
                         .HasColumnType("int");
 
-                    b.Property<int>("OrgProgramProgramId")
+                    b.Property<int?>("OrgProgramProgramId")
                         .HasColumnType("int");
 
                     b.Property<int>("ProgramId")
@@ -410,7 +420,7 @@ namespace NonProfitApp.Data.Migrations
 
                     b.HasIndex("OrgProgramProgramId");
 
-                    b.ToTable("FundraiserPrograms");
+                    b.ToTable("FundraiserPrograms", (string)null);
                 });
 
             modelBuilder.Entity("NonProfitApp.Models.OrgProgram", b =>
@@ -421,6 +431,9 @@ namespace NonProfitApp.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProgramId"), 1L, 1);
 
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -428,7 +441,7 @@ namespace NonProfitApp.Data.Migrations
 
                     b.HasKey("ProgramId");
 
-                    b.ToTable("OrgPrograms");
+                    b.ToTable("OrgPrograms", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -442,7 +455,7 @@ namespace NonProfitApp.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("NonProfitApp.Models.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -451,7 +464,7 @@ namespace NonProfitApp.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("NonProfitApp.Models.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -466,7 +479,7 @@ namespace NonProfitApp.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("NonProfitApp.Models.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -475,7 +488,7 @@ namespace NonProfitApp.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("NonProfitApp.Models.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -486,9 +499,7 @@ namespace NonProfitApp.Data.Migrations
                 {
                     b.HasOne("NonProfitApp.Models.Channel", "Channel")
                         .WithMany("Donations")
-                        .HasForeignKey("ChannelId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ChannelId");
 
                     b.HasOne("NonProfitApp.Models.Donor", "Donor")
                         .WithMany("Donations")
@@ -498,15 +509,11 @@ namespace NonProfitApp.Data.Migrations
 
                     b.HasOne("NonProfitApp.Models.Fundraiser", "Fundraiser")
                         .WithMany("Donations")
-                        .HasForeignKey("FundraiserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("FundraiserId");
 
                     b.HasOne("NonProfitApp.Models.OrgProgram", "OrgProgram")
                         .WithMany("Donations")
-                        .HasForeignKey("ProgramId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("OrgProgramProgramId");
 
                     b.Navigation("Channel");
 
@@ -546,9 +553,7 @@ namespace NonProfitApp.Data.Migrations
 
                     b.HasOne("NonProfitApp.Models.OrgProgram", "OrgProgram")
                         .WithMany("FundraiserPrograms")
-                        .HasForeignKey("OrgProgramProgramId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("OrgProgramProgramId");
 
                     b.Navigation("Fundraiser");
 

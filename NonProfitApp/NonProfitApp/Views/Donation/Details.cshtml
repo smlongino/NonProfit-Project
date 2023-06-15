@@ -2,8 +2,15 @@
 <a asp-controller="Donation" asp-action="Index" class="btn btn-primary">Back to Donations</a>
 <div class="card" style="width: 18rem;">
     <div class="card-body">
-        <h5 class="card-title">Donation Date: @Model.DonationDate Donation Amount: @Model.DonationAmount Channel: @Model.Channel.ChannelType </h5>
-        <a asp-controller="Donation" asp-action="Edit" asp-route-id="@Model.DonationId" class="btn btn-primary">Edit</a>
-        <a a asp-controller="Donation" asp-action="Delete" asp-route-id="@Model.DonationId" class="btn btn-primary">Delete</a>
+        <h5 class="card-title">Donor: @Model.Donor.FirstName @Model.Donor.LastName </h5>
+        <p class="card-text">Date: @Model.DonationDate </p>
+        <p class="card-text">Amount: @Model.DonationAmount </p>
+        <p class="card-text">Fundraiser: @Model.Fundraiser.FundraiserName </p>
+        <p class="card-text">Channel: @Model.Channel.ChannelType </p>
+        <p class="card-text">Program: @Model.OrgProgram.Name </p>
+        
+
+        <a asp-controller="Donation" asp-action="Edit" asp-route-donationid="@Model.DonationId" class="btn btn-primary">Edit</a>
+        <a asp-controller="Donation" asp-action="Delete" asp-route-id="@Model.DonationId" class="btn btn-primary">Delete</a>
     </div>
 </div>

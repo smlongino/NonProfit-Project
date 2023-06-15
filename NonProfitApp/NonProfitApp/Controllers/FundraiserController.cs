@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using NonProfitApp.Data;
 using NonProfitApp.Models;
+using System.Drawing;
+using System.Threading.Channels;
 
 namespace NonProfitApp.Controllers
 {
@@ -18,7 +20,7 @@ namespace NonProfitApp.Controllers
         {
             IEnumerable<Fundraiser> fundraisers = _context.Fundraisers;
             fundraisers = fundraisers.OrderBy(fundraisers => fundraisers.FundraiserName);
-            return View(fundraisers);
+            return View(fundraisers.Where(x => x.Active));
         }
 
         [HttpGet]
@@ -31,6 +33,10 @@ namespace NonProfitApp.Controllers
         public IActionResult Create(Fundraiser fundraiser)
         {
             if (!ModelState.IsValid)
+            {
+                return View(fundraiser);
+            }
+            if (_context.Fundraisers.Where(f => f.Active).Any(f => f.FundraiserName == fundraiser.FundraiserName))
             {
                 return View(fundraiser);
             }
@@ -58,11 +64,17 @@ namespace NonProfitApp.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Delete(Fundraiser fundraiser)
         {
-            //if(!ModelState.IsValid)
-            //{
-            //    return View(fundraiser);
-            //}
-            _context.Fundraisers.Remove(fundraiser);
+            if (fundraiser.FundraiserId == 0)
+            {
+                return NotFound();
+            }
+            Fundraiser f = _context.Fundraisers.SingleOrDefault(x => x.FundraiserId == fundraiser.FundraiserId);
+            if (f == null)
+            {
+                return NotFound();
+            }
+            f.Active = false;
+            _context.Fundraisers.Update(f);
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -85,10 +97,10 @@ namespace NonProfitApp.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Fundraiser fundraiser)
         {
-            //if(!ModelState.IsValid)
-            //{
-            //    return View(fundraiser);
-            //}
+            if (!ModelState.IsValid)
+            {
+                return View(fundraiser);
+            }
             _context.Fundraisers.Update(fundraiser);
             _context.SaveChanges();
             return RedirectToAction("Index");

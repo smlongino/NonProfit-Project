@@ -1,4 +1,4 @@
-﻿@model IEnumerable<NonProfitApp.Models.Donation>
+﻿@model IEnumerable<Donation>
 
 
 <h1>Donations</h1>
@@ -6,6 +6,12 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+<label class="form-label">Filter by channel: </label>
+<form asp-action="Index" method="get">
+<select class="form-control" onchange="this.form.submit()" name="channel" asp-items="@ViewBag.ChannelList">
+    <option selected="true" value="">No Filter</option>
+</select>
+</form>
 <table class="table">
     <thead>
         <tr>
@@ -21,12 +27,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Fundraiser)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Channel)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrgProgram)
-            </th>
+
             <th></th>
         </tr>
     </thead>
@@ -41,20 +42,17 @@
             </td>
             <td>
                     @Html.DisplayFor(modelItem => donation.Donor.FirstName)
+                    @Html.DisplayFor(modelItem => donation.Donor.LastName)
             </td>
-            <td>
+
+                <td>
                     @Html.DisplayFor(modelItem => donation.Fundraiser.FundraiserName)
-            </td>
+                </td>
+
             <td>
-                    @Html.DisplayFor(modelItem => donation.Channel.ChannelType)
-            </td>
-            <td>
-                    @Html.DisplayFor(modelItem => donation.OrgProgram.Name)
-            </td>
-            <td>
-                    <a asp-action="Edit" asp-route-id="@donation.DonationId">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@donation.DonationId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@donation.DonationId">Delete</a>
+
+                    <a asp-action="Details" asp-route-id="@donation.DonationId">Details</a> 
+
             </td>
         </tr>
 }

@@ -6,16 +6,17 @@ namespace NonProfitApp.Models
     {
         [Key]
         public int FundraiserId { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Fundraiser Name Required")]
         [StringLength(50)]
         [Display(Name = "Fundraiser Name")]
         public string FundraiserName { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Start Date Required")]
         [Display(Name = "Start Date")]
         public DateTime StartDate { get; set; }
-        [Required]
+        [Required(ErrorMessage = "End Date Required")]
         [Display(Name = "End Date")]
         public DateTime EndDate { get; set; }
+        public bool Active { get; set; }
 
         //nav props
         //a fundraiser can be related to more than 1 Donation and FundraiserChannels

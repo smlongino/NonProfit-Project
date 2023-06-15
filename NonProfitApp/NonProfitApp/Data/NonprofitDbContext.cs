@@ -4,7 +4,7 @@ using NonProfitApp.Models;
 
 namespace NonProfitApp.Data
 {
-    public class NonprofitDbContext : IdentityDbContext
+    public class NonprofitDbContext : IdentityDbContext<AppUser>
     {
         public NonprofitDbContext(DbContextOptions<NonprofitDbContext> options)
             : base(options)

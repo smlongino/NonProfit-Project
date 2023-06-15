@@ -1,18 +1,24 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using NonProfitApp.Data;
 using NonProfitApp.Models;
 using NonProfitApp.ViewModels;
 using System.Collections.Generic;
+using System.Threading.Channels;
 
 namespace NonProfitApp.Controllers
 {
     public class DonorController : Controller
     {
         NonprofitDbContext _context;
+
         public DonorController(NonprofitDbContext context)
         {
             _context = context;
+
         }
         // GET: DonorController
         public IActionResult Index(string search)
@@ -44,44 +50,33 @@ namespace NonProfitApp.Controllers
         }
 
         // GET: DonorController/Create
+        [Authorize]
         [HttpGet]
         public IActionResult Create()
         {
-            DonorCreateVM donorVM = new DonorCreateVM
-            {
-
-            };
-            return View(donorVM);
+            return View();
         }
 
         // POST: DonorController/Create
         [HttpPost]
-        public IActionResult Create(DonorCreateVM donorVM)
+        public IActionResult Create(Donor donor)
         {
             if (!ModelState.IsValid)
             {
-                return View(donorVM);
+                return View(donor);
             }
-            Donor donor = new Donor
+            if (_context.Donors.Where(d => d.Active).Any(d => d.FirstName == donor.FirstName && d.LastName == donor.LastName))
             {
-                Company = donorVM.Company,
-                FirstName = donorVM.FirstName,
-                LastName = donorVM.LastName,
-                Phone = donorVM.Phone,
-                Email = donorVM.Email,
-                StreetAddress = donorVM.StreetAddress,
-                City = donorVM.City,
-                State = donorVM.State,
-                Zip = donorVM.Zip,
-                Active = donorVM.Active,
-                ImageLocation = donorVM.ImageLocation
-            };
+                return View(donor);
+            }
+
             _context.Donors.Add(donor);
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
 
         // GET: DonorController/Edit/5
+        [Authorize]
         public IActionResult Edit(int id)
         {
             if(id == 0)
@@ -101,16 +96,17 @@ namespace NonProfitApp.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Donor donor)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return View(donor);
-            //}
+            if (!ModelState.IsValid)
+            {
+                return View(donor);
+            }
             _context.Donors.Update(donor);
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
 
         // GET: DonorController/Delete/5
+        [Authorize]
         public IActionResult Delete(int id)
         {
             if (id == 0)
@@ -141,7 +137,8 @@ namespace NonProfitApp.Controllers
             d.Active = false;
             _context.Donors.Update(d);
             _context.SaveChanges();
-            return View(d);
+            return RedirectToAction("Index");
         }
+
     }
     }

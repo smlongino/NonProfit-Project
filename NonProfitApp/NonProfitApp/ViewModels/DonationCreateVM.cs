@@ -12,6 +12,7 @@ namespace NonProfitApp.ViewModels
         public int DonationId { get; set; }
         [Required]
         [Column(TypeName = "decimal(10,2)")]
+        [Range(0, int.MaxValue)]
         [Display(Name = "Donation Amount")]
         public decimal DonationAmount { get; set; }
         [Required]
@@ -31,6 +32,7 @@ namespace NonProfitApp.ViewModels
         public int ProgramId { get; set; }
 
         public Donor Donor { get; set; }
+        public IEnumerable<SelectListItem> DonorList { get; set; }
         public IEnumerable<SelectListItem> ChannelList { get; set; }
         public IEnumerable<SelectListItem> ProgramList { get; set; }
         public IEnumerable<SelectListItem> FundraiserList { get; set; }

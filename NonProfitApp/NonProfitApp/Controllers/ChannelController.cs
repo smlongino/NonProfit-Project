@@ -17,7 +17,7 @@ namespace NonProfitApp.Controllers
         {
             IEnumerable<Channel> channels = _context.Channels;
             channels = channels.OrderBy(channels => channels.ChannelType);
-            return View(channels);
+            return View(channels.Where(x => x.Active));
         }
 
         [HttpGet]
@@ -29,10 +29,15 @@ namespace NonProfitApp.Controllers
         [HttpPost]
         public IActionResult Create(Channel channel)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return View(channel);
-            //}
+            if (!ModelState.IsValid)
+            {
+                return View(channel);
+            }
+            if (_context.Channels.Where(c => c.Active).Any(c => c.ChannelType == channel.ChannelType))
+            {
+                return View(channel);
+            }
+
             _context.Channels.Add(channel);
             _context.SaveChanges();
             return RedirectToAction("Index");
@@ -58,11 +63,17 @@ namespace NonProfitApp.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Delete(Channel channel)
         {
-            //if(!ModelState.IsValid)
-            //{
-            //    return View(channel);
-            //}
-            _context.Channels.Remove(channel);
+            if (channel.ChannelId == 0)
+            {
+                return NotFound();
+            }
+            Channel c = _context.Channels.SingleOrDefault(c => c.ChannelId == channel.ChannelId);
+            if (c == null)
+            {
+                return NotFound();
+            }
+            c.Active = false;
+            _context.Channels.Update(c);
             _context.SaveChanges();
             return RedirectToAction("Index");
         }

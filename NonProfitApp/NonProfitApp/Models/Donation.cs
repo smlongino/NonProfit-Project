@@ -9,25 +9,24 @@ namespace NonProfitApp.Models
     {
         [Key]
         public int DonationId { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Donation Amount Required")]
         [Column(TypeName = "decimal(10,2)")]
+        [Range(0, int.MaxValue)]
         [Display(Name = "Donation Amount")]
         public decimal DonationAmount { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Donation Date Required")]
         [Display(Name = "Donation Date")]
         public DateTime DonationDate { get; set; }
+        [Required(ErrorMessage = "Donor Required")]
         [ForeignKey("Donor")]
         [Display(Name = "Donor Id")]
         public int DonorId { get; set; }
-        [ForeignKey("Fundraiser")]
         [Display(Name = "Fundraiser Id")]
         public int? FundraiserId { get; set; }
-        [ForeignKey("Channel")]
         [Display(Name = "Channel Id")]
-        public int ChannelId { get; set; }
-        [ForeignKey("OrgProgram")]
+        public int? ChannelId { get; set; }
         [Display(Name = "Program Id")]
-        public int ProgramId { get; set; }
+        public int? ProgramId { get; set; }
 
         //nav props
         //A donation is associated with one donor

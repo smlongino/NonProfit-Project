@@ -19,13 +19,13 @@
 {
     <div class="card" style="width: 18rem;">
         <div class="card-body">
-            <h5 class="card-title">@d.DonorId </h5>
+            <h5 class="card-title" typeof="hidden"></h5>
             <h5 class="card-title">@d.FirstName @d.LastName</h5>
             <p class="card-text">@d.Phone</p>
             <p class="card-text">@d.Email</p>
+            
             <a asp-controller="Donor" asp-action="Details" asp-route-id="@d.DonorId" class="btn btn-primary">Details</a>
-            <a asp-controller="Donor" asp-action="Edit" asp-route-id="@d.DonorId" class="btn btn-primary">Edit</a>
-            <a asp-controller="Donor" asp-action="Delete" asp-route-id="@d.DonorId" class="btn btn-primary">Delete</a>
+
         </div>
     </div>
     

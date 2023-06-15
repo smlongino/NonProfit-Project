@@ -1,6 +1,6 @@
-﻿@model DonorCreateVM
+﻿@model Donor
 
-<form asp-action="Create" anctype="multipart/form-data" asp-controller="Donor" method="post" class="row g-3">
+<form asp-action="Create" asp-controller="Donor" method="post" class="row g-3">
     <div class="col-md-6">
         <label asp-for="FirstName" class="form-label">First Name</label>
         <input asp-for="FirstName" class="form-control">
@@ -46,11 +46,7 @@
         <input asp-for="Zip" class="form-control">
         <span asp-validation-for="Zip" class="text-danger"></span>
     </div>
-    <div class="col-md-4">
-        <label asp-for="DonorImage" class="form-label">Upload Donor Picture</label>
-        <input asp-for="DonorImage" class="form-control">
-        <span asp-validation-for="DonorImage" class="text-danger"></span>
-    </div>
+
     <input asp-for="Active" type ="hidden" value="true">
 
     <div class="col-12">

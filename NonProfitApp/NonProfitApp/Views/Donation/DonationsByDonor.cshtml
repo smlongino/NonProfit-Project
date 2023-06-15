@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Donation>
+
+
+<h1>Donations</h1>
+
+<form asp-action="DonationsByDonor" method="get">
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DonationAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DonationDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fundraiser)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Donation donation in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => donation.DonationAmount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => donation.DonationDate)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => donation.Fundraiser.FundraiserName)
+                </td>
+
+                <td>
+
+                    <a asp-action="Details" asp-route-id="@donation.DonationId">Details</a>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+</form>
