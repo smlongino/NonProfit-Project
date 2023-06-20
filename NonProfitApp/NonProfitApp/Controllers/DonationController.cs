@@ -51,7 +51,7 @@ namespace NonProfitApp.Controllers
             if (!string.IsNullOrEmpty(fundraiser))
             {
                 Fundraiser f = _context.Fundraisers.SingleOrDefault(f => f.FundraiserId.ToString() == fundraiser);
-                IEnumerable<Donation> donationsByFundraiser = _context.Donations.Where(d => d.Fundraiser.FundraiserId == f.FundraiserId).Select(d => new Donation
+                IEnumerable<Donation> donationsByFundraiser = _context.Donations.Where(d => d.FundraiserId == f.FundraiserId).Select(d => new Donation
                 {
                     DonationId = d.DonationId,
                     DonationAmount = d.DonationAmount,
@@ -67,7 +67,7 @@ namespace NonProfitApp.Controllers
             if (!string.IsNullOrEmpty(channel))
             {
                 Channel c = _context.Channels.SingleOrDefault(c => c.ChannelId.ToString() == channel);
-                IEnumerable<Donation> donationsByChannel = _context.Donations.Where(d => d.Channel.ChannelId == c.ChannelId).Select(d => new Donation
+                IEnumerable<Donation> donationsByChannel = _context.Donations.Where(d => d.ChannelId == c.ChannelId).Select(d => new Donation
                 {
                     DonationId = d.DonationId,
                     DonationAmount = d.DonationAmount,
@@ -83,7 +83,7 @@ namespace NonProfitApp.Controllers
             if (!string.IsNullOrEmpty(program))
             {
                 OrgProgram p = _context.OrgPrograms.SingleOrDefault(p => p.ProgramId.ToString() == program);
-                IEnumerable<Donation> donationsByProgram = _context.Donations.Where(d => d.OrgProgram.ProgramId == p.ProgramId).Select(d => new Donation
+                IEnumerable<Donation> donationsByProgram = _context.Donations.Where(d => d.ProgramId == p.ProgramId).Select(d => new Donation
                 {
                     DonationId = d.DonationId,
                     DonationAmount = d.DonationAmount,
@@ -94,7 +94,7 @@ namespace NonProfitApp.Controllers
                     Channel = d.Channel
                 });
 
-                return View(donationsByProgram.OrderBy(donationsByProgram => donationsByProgram.DonationDate));
+                return View(donationsByProgram);
             }
 
             return View(donations.OrderBy(donation => donation.DonationDate));

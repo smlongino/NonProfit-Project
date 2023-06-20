@@ -6,12 +6,74 @@
     <h1 class="display-4">Welcome</h1>
     <html>
     <head>
-        <!--Load the AJAX API-->
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script type="text/javascript">
+            google.charts.load('current', { 'packages': ['corechart'] });
+            google.charts.setOnLoadCallback(drawChart);
 
+            function drawChart() {
+                var data = google.visualization.arrayToDataTable([
+                    ['Month', '2023', '2022','2021'],
+                    ['Jan', 23054, 19041,18002],
+                    ['Mar', 16542, 15903, 16255],
+                    ['Apr', 17433, 16887, 17342],
+                    ['May', 18501, 18002, 18236],
+                    ['Jun', 19455, 18920, 19110],
+                    ['Jul', 24551, 19723, 19809],
+                    ['Aug', 19544, 18955, 18421],
+                    ['Sep', 21892, 21430, 21680],
+                    ['Oct', 22736, 25984, 22605],
+                    ['Nov', 23589, 23181, 23519],
+                    ['Dec', 24452, 23005, 24326]
+                ]);
+
+                var options = {
+                    title: 'Donations Per Month',
+                    curveType: 'function',
+                    legend: { position: 'bottom' }
+                };
+
+                var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+                chart.draw(data, options);
+            }
+        </script>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+            google.charts.load("current", { packages: ["corechart"] });
+            google.charts.setOnLoadCallback(drawChart);
+            function drawChart() {
+                var data = google.visualization.arrayToDataTable([
+                    ['Program', 'Donations'],
+                    ['Scholarship', 23000],
+                    ['Sponsorship', 31000],
+                    ['Build A School', 39000],
+                    ['General', 74000],
+                    ['Awareness Program', 4000]
+                ]);
+
+                var options = {
+                    title: '2023 Donations By Program',
+                    pieHole: 0.4,
+                };
+
+                var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+                chart.draw(data, options);
+            }
         </script>
     </head>
+    <body>
 
+    <div class="container text-center">
+        <div class="row">
+            <div class="col">
+                    <div id="curve_chart" style="width: 700px; height: 500px"></div>
+            </div>
+            <div class="col">
+                    <div id="donutchart" style="width: 530px; height: 530px;"></div>
+            </div>
+        </div>
+        
+    </body>
 </html>
 </div>
