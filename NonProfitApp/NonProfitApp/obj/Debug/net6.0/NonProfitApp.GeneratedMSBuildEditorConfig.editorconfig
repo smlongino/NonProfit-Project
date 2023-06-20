@@ -68,12 +68,12 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9uYXRpb25cRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/slong/OneDrive/Capstone Project/NonProfit Project/NonProfitApp/NonProfitApp/Views/Donation/DonationsByChannel.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9uYXRpb25cRG9uYXRpb25zQnlDaGFubmVsLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/slong/OneDrive/Capstone Project/NonProfit Project/NonProfitApp/NonProfitApp/Views/Donation/DonationsByDonor.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9uYXRpb25cRG9uYXRpb25zQnlEb25vci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/slong/OneDrive/Capstone Project/NonProfit Project/NonProfitApp/NonProfitApp/Views/Donation/DonationsByFundraiser.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9uYXRpb25cRG9uYXRpb25zQnlGdW5kcmFpc2VyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/slong/OneDrive/Capstone Project/NonProfit Project/NonProfitApp/NonProfitApp/Views/Donation/Edit.cshtml]

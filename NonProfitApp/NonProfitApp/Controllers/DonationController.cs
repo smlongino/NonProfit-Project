@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Build.Execution;
 using Microsoft.EntityFrameworkCore;
 using NonProfitApp.Data;
 using NonProfitApp.Models;
@@ -20,17 +22,87 @@ namespace NonProfitApp.Controllers
             _context = context;
         }
         // GET: DonationController
-        public ActionResult Index()
+        public ActionResult Index(string fundraiser, string channel, string program)
         {
             //Use Include() if you have a collection
             IEnumerable<Donation> donations = _context.Donations.Include(x => x.Channel).Include(x => x.OrgProgram).Include(x => x.Fundraiser).Include(x => x.Donor);
-            donations = donations.OrderBy(donation => donation.DonationDate);
 
-            return View(donations);
+            IEnumerable<SelectListItem> selectFund = _context.Fundraisers.Where(x => x.Active).Select(x => new SelectListItem
+            {
+                Text = x.FundraiserName,
+                Value = x.FundraiserId.ToString()
+
+            }) ;
+            ViewBag.fundraiserList = selectFund;
+            IEnumerable<SelectListItem> selectCh = _context.Channels.Where(x => x.Active).Select(x => new SelectListItem
+            {
+                Text = x.ChannelType,
+                Value = x.ChannelId.ToString()
+
+            });
+            ViewBag.channelList = selectCh;
+            IEnumerable<SelectListItem> selectPr = _context.OrgPrograms.Where(x => x.Active).Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = x.ProgramId.ToString()
+
+            });
+            ViewBag.programList = selectPr;
+            if (!string.IsNullOrEmpty(fundraiser))
+            {
+                Fundraiser f = _context.Fundraisers.SingleOrDefault(f => f.FundraiserId.ToString() == fundraiser);
+                IEnumerable<Donation> donationsByFundraiser = _context.Donations.Where(d => d.Fundraiser.FundraiserId == f.FundraiserId).Select(d => new Donation
+                {
+                    DonationId = d.DonationId,
+                    DonationAmount = d.DonationAmount,
+                    DonationDate = d.DonationDate,
+                    Donor = d.Donor,
+                    OrgProgram = d.OrgProgram,
+                    Fundraiser = d.Fundraiser,
+                    Channel = d.Channel
+                });
+
+                return View(donationsByFundraiser.OrderBy(donationsByFundraiser => donationsByFundraiser.DonationDate));
+            }
+            if (!string.IsNullOrEmpty(channel))
+            {
+                Channel c = _context.Channels.SingleOrDefault(c => c.ChannelId.ToString() == channel);
+                IEnumerable<Donation> donationsByChannel = _context.Donations.Where(d => d.Channel.ChannelId == c.ChannelId).Select(d => new Donation
+                {
+                    DonationId = d.DonationId,
+                    DonationAmount = d.DonationAmount,
+                    DonationDate = d.DonationDate,
+                    Donor = d.Donor,
+                    OrgProgram = d.OrgProgram,
+                    Fundraiser = d.Fundraiser,
+                    Channel = d.Channel
+                });
+
+                return View(donationsByChannel.OrderBy(donationsByChannel => donationsByChannel.DonationDate));
+            }
+            if (!string.IsNullOrEmpty(program))
+            {
+                OrgProgram p = _context.OrgPrograms.SingleOrDefault(p => p.ProgramId.ToString() == program);
+                IEnumerable<Donation> donationsByProgram = _context.Donations.Where(d => d.OrgProgram.ProgramId == p.ProgramId).Select(d => new Donation
+                {
+                    DonationId = d.DonationId,
+                    DonationAmount = d.DonationAmount,
+                    DonationDate = d.DonationDate,
+                    Donor = d.Donor,
+                    OrgProgram = d.OrgProgram,
+                    Fundraiser = d.Fundraiser,
+                    Channel = d.Channel
+                });
+
+                return View(donationsByProgram.OrderBy(donationsByProgram => donationsByProgram.DonationDate));
+            }
+
+            return View(donations.OrderBy(donation => donation.DonationDate));
             
         }
         public IActionResult DonationsByDonor(int donorId)
         {
+            
             IEnumerable<Donation> donationsByDonor = _context.Donations.Where(d => d.DonorId == donorId).Select(d => new Donation
             {
                 DonationId = d.DonationId,
@@ -42,7 +114,12 @@ namespace NonProfitApp.Controllers
                 Channel = d.Channel
 
             });
-            return View(donationsByDonor);
+            if (donationsByDonor == null)
+            {
+                return NotFound();
+            }
+
+            return View(donationsByDonor.OrderBy(donation => donation.DonationDate));
 
         }
 
@@ -66,6 +143,7 @@ namespace NonProfitApp.Controllers
             donation.Fundraiser = _context.Fundraisers.SingleOrDefault(f => f.FundraiserId == donation.FundraiserId);
             return View(donation);
         }
+        [Authorize]
         [HttpGet]
         public IActionResult CreatefromDonor(int donorId)
         {
@@ -112,7 +190,9 @@ namespace NonProfitApp.Controllers
             };
             return View(donationCreateVM);
         }
+
         [HttpPost]
+
         public IActionResult CreatefromDonor(DonationCreateVM donationCreateVM)
         {
             if (!ModelState.IsValid)
@@ -154,7 +234,7 @@ namespace NonProfitApp.Controllers
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
-
+        [Authorize]
         [HttpGet]
         public IActionResult Create()
         {
@@ -233,6 +313,7 @@ namespace NonProfitApp.Controllers
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
+        [Authorize]
         [HttpGet]
         public IActionResult Edit(int donationId)
         {
@@ -309,6 +390,7 @@ namespace NonProfitApp.Controllers
             return RedirectToAction("Index");
 
         }
+        [Authorize]
         public IActionResult Delete(int id)
         {
             if (id == 0)

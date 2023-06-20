@@ -1,11 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using NonProfitApp.Data;
 using NonProfitApp.Models;
 using System.Diagnostics;
 
+
+
 namespace NonProfitApp.Controllers
 {
+
     public class HomeController : Controller
     {
+
         private readonly ILogger<HomeController> _logger;
 
         public HomeController(ILogger<HomeController> logger)
@@ -15,6 +20,7 @@ namespace NonProfitApp.Controllers
 
         public IActionResult Index()
         {
+
             return View();
         }
 
@@ -22,6 +28,7 @@ namespace NonProfitApp.Controllers
         {
             return View();
         }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

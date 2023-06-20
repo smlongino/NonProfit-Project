@@ -1,13 +1,11 @@
-﻿@model IEnumerable<NonProfitApp.Models.Donation>
+﻿@model IEnumerable<Donation>
 
 
 <h1>Donations</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
+
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.DonationAmount)
@@ -18,15 +16,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Donor)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Fundraiser)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrgProgram)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Channel)
-            </th>
+
 
             <th></th>
         </tr>
@@ -35,6 +25,7 @@
         @foreach (Donation donation in Model)
         {
             <tr>
+
                 <td>
                     @Html.DisplayFor(modelItem => donation.DonationAmount)
                 </td>
@@ -47,20 +38,9 @@
                 </td>
 
                 <td>
-                    @Html.DisplayFor(modelItem => donation.Fundraiser.FundraiserName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => donation.OrgProgram.Name)
-                </td>
 
-                <td>
-                    @Html.DisplayFor(modelItem => donation.Channel.ChannelType)
-                </td>
-
-                <td>
-                    <a asp-action="Edit" asp-route-id="@donation.DonationId">Edit</a>
                     <a asp-action="Details" asp-route-id="@donation.DonationId">Details</a>
-                    <a asp-action="Delete" asp-route-id="@donation.DonationId">Delete</a>
+
                 </td>
             </tr>
         }

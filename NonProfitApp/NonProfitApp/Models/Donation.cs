@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace NonProfitApp.Models
 {
@@ -37,5 +38,6 @@ namespace NonProfitApp.Models
         public Channel Channel { get; set; }
         //A donation is associated with one program 
         public OrgProgram OrgProgram { get; set; }
+
     }
 }

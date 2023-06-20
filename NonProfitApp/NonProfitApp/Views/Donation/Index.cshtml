@@ -6,11 +6,27 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<label class="form-label">Filter by channel: </label>
+
 <form asp-action="Index" method="get">
-<select class="form-control" onchange="this.form.submit()" name="channel" asp-items="@ViewBag.ChannelList">
-    <option selected="true" value="">No Filter</option>
-</select>
+    <div class="container text-center">
+        <div class="row align-items-start">
+            <div class="col">
+                <select class="form-control" onchange="this.form.submit()" name="fundraiser" asp-items="@ViewBag.fundraiserList">
+                    <option selected="true" value="">Filter by Fundraiser</option>
+                </select>
+            </div>
+            <div class="col">
+                <select class="form-control" onchange="this.form.submit()" name="channel" asp-items="@ViewBag.channelList">
+                    <option selected="true" value="">Filter by Channel</option>
+                </select>
+            </div>
+            <div class="col">
+                <select class="form-control" onchange="this.form.submit()" name="program" asp-items="@ViewBag.programList">
+                    <option selected="true" value="">Filter by Program</option>
+                </select>
+            </div>
+        </div>
+    </div>
 </form>
 <table class="table">
     <thead>
